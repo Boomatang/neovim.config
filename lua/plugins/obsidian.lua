@@ -31,7 +31,4 @@ return {
       },
     },
   },
-  keys = {
-    { '<leader>on', '<cmd>ObsidianNew<CR>', desc = 'New Obsidian note' },
-  },
 }

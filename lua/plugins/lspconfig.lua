@@ -2,7 +2,6 @@ return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     { 'j-hui/fidget.nvim', opts = {} },
@@ -73,6 +72,14 @@ return { -- LSP Configuration & Plugins
             callback = vim.lsp.buf.clear_references,
           })
         end
+
+        -- The following code creates a keymap to toggle inlay hints in your
+        -- code, if the language server you are using supports them
+        --
+        -- This may be unwanted, since they displace some of your code
+        map('<leader>th', function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+        end, '[T]oggle Inlay [H]ints')
       end,
     })
 
@@ -83,7 +90,7 @@ return { -- LSP Configuration & Plugins
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-    -- Adding the Custon Dictionary to LTex Language Server
+    -- Adding the Custom Dictionary to LTex Language Server
     local words = {}
     for word in io.open(vim.fn.stdpath 'config' .. '/spell/en.utf-8.add', 'r'):lines() do
       table.insert(words, word)
@@ -128,17 +135,14 @@ return { -- LSP Configuration & Plugins
 
       texlab = {},
 
+      ltex = {},
+
       gopls = {
         settings = {
           gopls = {
-            buildFlags = { '-tags=unit,integration' },
+            buildFlags = { '-tags=integration unit' },
+            staticcheck = true,
           },
-        },
-      },
-
-      ltex = {
-        dictionary = {
-          ['en-US'] = words,
         },
       },
 
@@ -168,6 +172,8 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
+
+      zls = {},
     }
 
     -- Ensure the servers and tools above are installed
@@ -180,29 +186,31 @@ return { -- LSP Configuration & Plugins
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
+    -- Note: Mason package names differ from lspconfig server names
+    local ensure_installed = {
       'stylua', -- Used to format lua code
-      'pylsp', -- python tools
+      'python-lsp-server', -- pylsp
       'isort',
       'black',
       'texlab', -- latex tools
       'gopls', -- golang tools
-      'ltex',
-    })
+      'lua-language-server', -- lua_ls
+      'ltex-ls', -- ltex
+      'mypy',
+      'zls', -- zig
+    }
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
-    }
+    -- Load lspconfig to register server definitions with vim.lsp.config
+    require 'lspconfig'
+
+    -- Set up each LSP server with its configuration using Neovim 0.11+ native API
+    for server_name, server_config in pairs(servers) do
+      server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_config.capabilities or {})
+      vim.lsp.config(server_name, server_config)
+    end
+
+    -- Enable all configured servers
+    vim.lsp.enable(vim.tbl_keys(servers))
   end,
 }
