@@ -1,5 +1,5 @@
-vim.filetype.add {
-  extension = {
-    bu = 'yaml',
-  },
-}
+vim.filetype.add({
+	extension = {
+		bu = "yaml",
+	},
+})

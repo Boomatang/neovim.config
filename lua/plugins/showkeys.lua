@@ -1,2 +1,2 @@
 -- https://github.com/nvzone/showkeys
-return { 'nvzone/showkeys', cmd = 'ShowkeysToggle' }
+return { "nvzone/showkeys", cmd = "ShowkeysToggle" }
