@@ -67,3 +67,5 @@ vim.opt.colorcolumn = "120"
 
 -- Set spellfile location
 vim.opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+
+vim.opt.cole = 1
