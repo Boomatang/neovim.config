@@ -1,11 +1,9 @@
--- Highlight, edit, and navigate code
--- https://github.com/nvim-treesitter/nvim-treesitter
+-- Lightweight treesitter parser manager for Neovim 0.12+
+-- Neovim 0.12 has built-in treesitter highlighting; this plugin only handles parser installation.
+-- https://github.com/romus204/tree-sitter-manager.nvim
 return {
-	"nvim-treesitter/nvim-treesitter",
-	branch = "main",
-	build = ":TSUpdate",
+	"romus204/tree-sitter-manager.nvim",
 	config = function()
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter").setup({})
+		require("tree-sitter-manager").setup()
 	end,
 }
