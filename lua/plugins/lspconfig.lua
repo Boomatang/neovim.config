@@ -135,7 +135,12 @@ return { -- LSP Configuration & Plugins
 
 			texlab = {},
 
-			ltex = {},
+			ltex = {
+				cmd = { "ltex-ls" },
+				cmd_env = {
+					JAVA_OPTS = "-Djdk.xml.totalEntitySizeLimit=0",
+				},
+			},
 
 			gopls = {
 				settings = {
