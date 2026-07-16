@@ -48,8 +48,7 @@ require("lazy").setup({
 	-- require 'kickstart.plugins.indent_line',
 
 	-- plugins that are used
-	require("plugins.comment"),
-	require("plugins.conform"),
+require("plugins.conform"),
 	require("plugins.gitsigns"),
 	require("plugins.harpoon"),
 	require("plugins.lspconfig"),

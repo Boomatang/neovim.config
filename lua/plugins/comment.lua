@@ -1,2 +1,7 @@
 -- https://github.com/numToStr/Comment.nvim
-return { "numToStr/Comment.nvim", opts = {} }
+return {
+  "numToStr/Comment.nvim",
+  config = function(_, opts)
+    require("Comment").setup(opts)
+  end,
+}
