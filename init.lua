@@ -48,12 +48,12 @@ require("lazy").setup({
 	-- require 'kickstart.plugins.indent_line',
 
 	-- plugins that are used
-require("plugins.conform"),
+	require("plugins.conform"),
 	require("plugins.gitsigns"),
 	require("plugins.harpoon"),
 	require("plugins.lspconfig"),
 	require("plugins.mini"),
-	require 'plugins.nvim-cmp',
+	require("plugins.nvim-cmp"),
 	require("plugins.telescope"),
 	require("plugins.todo-comments"),
 	require("plugins.tokyonight"),
@@ -65,6 +65,6 @@ require("plugins.conform"),
 	-- plugins under review
 	require("plugins.showkeys"),
 	require("plugins.git-blame"),
-	require("plugins.nvim-converage"),
+	require("plugins.nvim-coverage"),
 	require("plugins.marker-groups"),
 })
