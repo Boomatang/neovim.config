@@ -168,6 +168,7 @@ return { -- LSP Configuration & Plugins
 			},
 
 			zls = {},
+			marksman = {},
 		}
 
 		-- Ensure the servers and tools above are installed
@@ -193,6 +194,7 @@ return { -- LSP Configuration & Plugins
 			"mypy",
 			"rust-analyzer", -- rust
 			"zls", -- zig
+			"marksman",
 		}
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

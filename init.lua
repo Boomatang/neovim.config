@@ -67,4 +67,9 @@ require("lazy").setup({
 	require("plugins.git-blame"),
 	require("plugins.nvim-coverage"),
 	require("plugins.marker-groups"),
+	require("plugins.neowiki"),
+	require("plugins.render-markdown"),
 })
+
+-- require("custom.plugins.zim-newnote")
+require("custom.plugins")

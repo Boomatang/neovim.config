@@ -2,4 +2,9 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {}
+return {
+	require("custom.plugins.zim-newnote"),
+	require("custom.plugins.journal"),
+	require("custom.plugins.autocmds"),
+	require("custom.plugins.zim-lsp"),
+}
